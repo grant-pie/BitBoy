@@ -1,0 +1,23 @@
+{
+  "slug": "BitBoy",
+  "name": "BitBoy",
+  "version": "2.0.0",
+  "license": "proprietary",
+  "brand": "Knoppies",
+  "author": "Grant Pieterse",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "BitOscillator",
+      "name": "8-Bit Oscillator",
+      "description": "Classic 8-bit style oscillator with square, triangle, sawtooth, and noise waveforms. Features authentic bit-crushing and NES-style noise generation.",
+      "tags": ["Oscillator", "Digital", "Lo-fi"]
+    }
+  ]
+}
