@@ -223,10 +223,21 @@ struct BitBoyLabels : Widget {
 		// --- Output label (18px above jack center) ---
 		nvgText(args.vg, cx, 327.f, "OUT", NULL);     // MAIN_OUTPUT at y=345 (345-18)
 
-		// --- Brand ---
+		// --- Brand: "VON" + "K" centred as one word ---
 		nvgFontSize(args.vg, 7.f);
-		nvgFillColor(args.vg, nvgRGB(0x55, 0x55, 0x55));
-		nvgText(args.vg, cx, 372.f, "KNOPPIES", NULL); // vertically centred with bottom screws (380 - 15 + 7.5)
+		float bounds[4];
+		nvgTextBounds(args.vg, 0, 0, "VON", NULL, bounds);
+		float vonW   = bounds[2] - bounds[0];
+		nvgTextBounds(args.vg, 0, 0, "K",   NULL, bounds);
+		float kW     = bounds[2] - bounds[0];
+		float startX = cx - (vonW + kW) / 2.f;
+
+		nvgTextAlign(args.vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+		nvgFillColor(args.vg, nvgRGB(0xf4, 0xf5, 0xf7));
+		nvgText(args.vg, startX,         372.f, "VON", NULL);
+		nvgFillColor(args.vg, nvgRGB(0xc0, 0x84, 0xfc));
+		nvgText(args.vg, startX + vonW,  372.f, "K",   NULL);
+		nvgTextAlign(args.vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
 	}
 };
 
