@@ -39,8 +39,8 @@ struct BitBoy : Module {
 		configParam(PITCH_PARAM, -4.f, 4.f, 0.f, "Pitch", " octaves");
 		configParam(FINE_PARAM, -0.5f, 0.5f, 0.f, "Fine tune", " semitones", 0.f, 12.f);
 		configParam(PW_PARAM, 0.01f, 0.99f, 0.5f, "Pulse width", "%", 0.f, 100.f);
-		configParam(PW_CV_PARAM, -1.f, 1.f, 0.f, "PW CV amount");
-		configParam(FM_PARAM, -1.f, 1.f, 0.f, "FM amount");
+		configParam(PW_CV_PARAM, -1.f, 1.f, 1.f, "PW CV amount");
+		configParam(FM_PARAM, -1.f, 1.f, 1.f, "FM amount");
 		configSwitch(WAVEFORM_PARAM, 0.f, 3.f, 0.f, "Waveform", {"Square", "Triangle", "Sawtooth", "Noise"});
 
 		configInput(VOCT_INPUT, "V/Oct pitch");
@@ -106,13 +106,14 @@ struct BitBoy : Module {
 			case 0: // Square/Pulse
 				out = (phase < pw) ? 1.f : -1.f;
 				break;
-			case 1: // Triangle (4-bit quantized like NES)
+			case 1: // Triangle (4-bit quantized like NES), RMS-normalised to match square
 				if (phase < 0.5f) {
 					out = phase * 4.f - 1.f;
 				} else {
 					out = 3.f - phase * 4.f;
 				}
 				out = std::round(out * 7.5f) / 7.5f;
+				out = clamp(out * 1.7321f, -1.f, 1.f); // ×√3 normalises RMS to 1.0
 				break;
 			case 2: // Sawtooth
 				out = 2.f * phase - 1.f;
